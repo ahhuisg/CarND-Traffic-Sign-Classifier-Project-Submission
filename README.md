@@ -20,11 +20,15 @@ The goals / steps of this project are the following:
 
 [image3]: ./doc/after_gray.png "After Grayscaling"
 
-[image4]: ./doc/augt_org.png "Original Image"
+[image4]: ./new_images/stop.jpeg "Stop"
 
-[image5]: ./doc/augt_1.png "Augmented Image 1"
+[image5]: ./new_images/road_work.jpeg "Road Work"
 
-[image6]: ./doc/augt_2.png "Augmented Image 2"
+[image6]: ./new_images/keep_right.jpeg "Keep Right"
+
+[image7]: ./new_images/70.jpeg "70"
+
+[image8]: ./new_images/children_crossing.jpeg "Children Crossing"
 
 ### Data Set Summary & Exploration
 
@@ -113,28 +117,18 @@ My final model results were:
 * validation set accuracy of 0.974
 * test set accuracy of 0.969
 
+* The first architecture that was chosen is LeNet. It is a proven LeNet is a famous CNN structure for image recognition.
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+* The problem is LeNet is that it has only 2 Convolutional Layers and the size of its layers are too small which has onnly 6 and 16 filters respectively.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* I increase the number of Layers to 4, each of which has 128 filters. In addition, for each Convolution Layer, I also added a average pooling layer, a dropout layer.
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+* I changed the default batch size from 128 to 64 and also tried various dropout rate from 0.5, 0.75 and the final value of 0.85. These changes resuled in better Validation and Test accuracies. I also dramatically reduced the number of training Epochs from 500 to 30, because I found that the validation accuracy barely changed has saturated after Epoch 30.
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+* The introdution of the dropout layer increase the test accuracy as well as the model's capability of predicting new images. The dropout layer is a kind of regulation to the model to prevent overfitting. I forces each neuron in the layer to be more independently capable of extracting features.
  
 
-### Test a Model on New Images
+### Test the Model on new images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
@@ -145,39 +139,73 @@ Here are five German traffic signs that I found on the web:
 
 The first image might be difficult to classify because ...
 
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+
+### Predictions on new images
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Road Work     		| Road Work 									|
+| Keep Right			| Keep Right									|
+| 70 km/h	      		| General caution					 			|
+| Children Crossing		| Children Crossing	     						|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This is worse than the accuracy on the test set of 96.9%. The reason is that for the the image of 70 km/h, the object was too blur after preprocessing and it is too far from the center of the image.
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+#### Prediction on new images
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .0463         		| Stop   										| 
+| .0277  				| Priority road 								|
+| .0268					| Speed limit (120km/h)							|
+| .0262	      			| Turn left ahead					 			|
+| .0260				    | Speed limit (70km/h)     						|
+
+For the second image, the top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .0442         		| Road Work   									| 
+| .0304  				| Road narrows on the right						|
+| .0303					| Bicycles crossing								|
+| .0298	      			| General caution					 			|
+| .0282				    | Bumpy road    								|
+
+For the third image, the top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .0481         		| Keep right  									| 
+| .0292  				| End of speed limit (80km/h)					|
+| .0280					| General caution								|
+| .0278	      			| Roundabout mandatory					 		|
+| .0272				    | Priority road   								|
 
 
-For the second image ... 
+For the fourth image, the top five soft max probabilities were
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .0405         		| General caution  								| 
+| .0371  				| Traffic signals								|
+| .0350					| Priority road									|
+| .0324	      			| Road work					 					|
+| .0318				    | Road narrows on the right    					|
 
 
+For the fifth image, the top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .0470         		| Children crossing  							| 
+| .0372  				| Bicycles crossing								|
+| .0333					| Slippery road									|
+| .0324	      			| Beware of ice/snow					 		|
+| .0278				    | General caution    							|
