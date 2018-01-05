@@ -117,15 +117,15 @@ My final model results were:
 * validation set accuracy of 0.974
 * test set accuracy of 0.969
 
-* The first architecture that was chosen is LeNet. It is a proven LeNet is a famous CNN structure for image recognition.
+* The first architecture that was chosen is LeNet. It is a proven achchitecture of CNN for image recognition.
 
-* The problem is LeNet is that it has only 2 Convolutional Layers and the size of its layers are too small which has onnly 6 and 16 filters respectively.
+* The problem of LeNet is that it has only 2 Convolutional Layers and the size of its layers are too small which has only 6 and 16 filters respectively.
 
-* I increase the number of Layers to 4, each of which has 128 filters. In addition, for each Convolution Layer, I also added a average pooling layer, a dropout layer.
+* I increase the number of Layers to 4, each of which has 128 filters. In addition, for each Convolution Layer, I also added an average pooling layer and a dropout layer.
 
-* I changed the default batch size from 128 to 64 and also tried various dropout rate from 0.5, 0.75 and the final value of 0.85. These changes resuled in better Validation and Test accuracies. I also dramatically reduced the number of training Epochs from 500 to 30, because I found that the validation accuracy barely changed has saturated after Epoch 30.
+* I changed the default batch size from 128 to 64 and also tried various dropout rate from 0.5, 0.75 and the final value of 0.85. These changes resuled in better Validation and Test accuracies. I also dramatically reduced the number of training Epochs from 500 to 30, because I found that the validation accuracy barely changed after Epoch 30.
 
-* The introdution of the dropout layer increase the test accuracy as well as the model's capability of predicting new images. The dropout layer is a kind of regulation to the model to prevent overfitting. I forces each neuron in the layer to be more independently capable of extracting features.
+* The introdution of the dropout layer increase the test accuracy as well as the model's capability of predicting new images. The dropout layer is a kind of regulation to the model to prevent overfitting. It forces each neuron in the layer to be more independently capable of extracting features.
  
 
 ### Test the Model on new images
@@ -136,8 +136,6 @@ Here are five German traffic signs that I found on the web:
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
 
 
 ### Predictions on new images
